@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+:root {
+  font-family: 'Roboto', 'Noto Sans', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  font-family: 'Roboto', 'Noto Sans', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.katex {
+  font-size: 1.05em;
+}
+
+.math-content {
+  display: inline;
+}

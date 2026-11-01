@@ -1,0 +1,11 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# Tài nguyên OCR được sinh tự động bởi scripts/copy-ocr-assets.mjs
+public/ocr/

@@ -1,0 +1,7 @@
+{
+  "name": "Math2Word VN - Chuyển Đề Toán PDF Sang Word",
+  "description": "Nhận dạng đề thi Toán Việt Nam từ PDF, nhiều ảnh hoặc chụp trực tiếp bằng camera ngay trên trình duyệt (không dùng AI trên mạng), sửa công thức, xuất Word Equation gốc.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

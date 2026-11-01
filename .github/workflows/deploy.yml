@@ -1,0 +1,56 @@
+# Tự động build và đăng trang web lên GitHub Pages mỗi khi bạn đẩy code lên nhánh main.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # cho phép bấm chạy thủ công trong tab Actions
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Cài thư viện
+        run: npm ci
+
+      - name: Chạy kiểm thử
+        run: npm test
+
+      - name: Tính đường dẫn gốc của trang
+        # Repo tên "ten.github.io" thì trang nằm ở gốc "/", còn lại nằm ở "/ten-repo/"
+        run: |
+          NAME="${{ github.event.repository.name }}"
+          if [[ "$NAME" == *.github.io ]]; then echo "BASE_PATH=/" >> "$GITHUB_ENV"; else echo "BASE_PATH=/$NAME/" >> "$GITHUB_ENV"; fi
+
+      - name: Build
+        run: npm run build
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
